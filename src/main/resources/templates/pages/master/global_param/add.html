@@ -1,0 +1,39 @@
+<form th:action="@{/master/global-param/save}" th:object="${data}" method="post">
+    <div class="modal-header">
+        <h4 class="modal-title">Master Global Param</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body row">
+        <div class="col-12">
+            <div class="form-group">
+                <label>Condition</label>
+                <input type="text" th:field="*{paramCondition}" th:class="${#fields.hasErrors('paramCondition')} ? 'form-control is-invalid':'form-control'"/>
+                <span th:if="${#fields.hasErrors('paramCondition')}" class="error invalid-feedback" th:errors="*{paramCondition}">pesan error</span>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <input type="text" th:field="*{paramDesc}" th:class="${#fields.hasErrors('paramDesc')} ? 'form-control is-invalid':'form-control'"/>
+                <span th:if="${#fields.hasErrors('paramDesc')}" class="error invalid-feedback" th:errors="*{paramDesc}">pesan error</span>
+            </div>
+            <div class="form-group">
+                <label>Value</label>
+                <input type="text" th:field="*{paramValue}" th:class="${#fields.hasErrors('paramValue')} ? 'form-control is-invalid':'form-control'"/>
+                <span th:if="${#fields.hasErrors('paramValue')}" class="error invalid-feedback" th:errors="*{paramValue}">pesan error</span>
+            </div>
+            <div class="form-group">
+                <label>Information</label>
+                <input type="text" th:field="*{info}" th:class="${#fields.hasErrors('info')} ? 'form-control is-invalid':'form-control'"/>
+                <span th:if="${#fields.hasErrors('info')}" class="error invalid-feedback" th:errors="*{info}">pesan error</span>
+            </div>
+        </div>
+        <div class="col-6">
+
+        </div>
+    </div>
+    <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+</form>

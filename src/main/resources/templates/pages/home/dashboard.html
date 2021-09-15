@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="container-fluid" layout:fragment="header">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Dashboard</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a th:href="@{/dashboard}">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+
+    <!-- Small boxes (Stat box) -->
+    <div class="row" layout:fragment="content">
+        <div class="col-lg-12 col-12">
+            <div class="row">
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3 th:text="${userCount}">150</h3>
+
+                            <p>Users</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person"></i>
+                        </div>
+                        <a th:href="@{/scoring/business/list}" class="small-box-footer detail-link">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3 th:text="${roleCount}">44</h3>
+
+                            <p>Roles</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                        </div>
+                        <a th:href="@{/scoring/upload}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>2</h3>
+
+                            <p>Download Template Retail</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-arrow-down-a"></i>
+                        </div>
+                        <a th:href="@{/home/download}" class="small-box-footer detail-link">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-primary">
+                        <div class="inner">
+                            <h3>2</h3>
+
+                            <p>Upload Scoring</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-arrow-up-a"></i>
+                        </div>
+                        <a th:href="@{/home/upload}" class="small-box-footer detail-link">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-12" id="detail-item" >
+
+        </div>
+    </div>
+    <!-- /.row -->
+    <script layout:fragment="client-script">
+        $(function (){
+            console.log('dashboard ...');
+        })
+
+        $('.detail-link').on('click', function (e){
+           e.preventDefault();
+           var url = $(this).attr('href');
+           $.ajax({
+               url:url,
+               method:'GET',
+               dataType:'HTML',
+               success: function (data){
+                   $('#detail-item').html(data);
+                   console.log('ajax with url: '+ url +' is success');
+
+                   //Date range picker
+                   $('#detail-item').find('#date-range').daterangepicker({
+                       maxDate: new Date(),
+                   });
+               }
+           });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<form th:action="@{/master/user/update}" th:object="${user}" method="post">
+    <div class="modal-header">
+        <h4 class="modal-title">Master Role</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body row">
+        <div class="col-12">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="hidden" name="id" id="id" th:value="${user.id}">
+                <input type="text" th:field="*{username}" th:class="${#fields.hasErrors('username')} ? 'form-control is-invalid':'form-control'"/>
+                <span th:if="${#fields.hasErrors('username')}" class="error invalid-feedback" th:errors="*{username}">pesan error</span>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" th:field="*{email}" th:class="${#fields.hasErrors('email')} ? 'form-control is-invalid':'form-control'"/>
+                <span th:if="${#fields.hasErrors('email')}" class="error invalid-feedback" th:errors="*{email}">pesan error</span>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" th:field="*{password}" th:class="${#fields.hasErrors('password')} ? 'form-control is-invalid':'form-control'"/>
+                <span th:if="${#fields.hasErrors('password')}" class="error invalid-feedback" th:errors="*{password}">pesan error</span>
+            </div>
+            <div class="form-group">
+                <label>Role</label>
+                <select  class="form-control" required="required"
+                         name="role" id="role">
+                    <option disabled="disabled" > --
+                        Pilih --
+                    </option>
+                    <option th:each="item : ${roles}"
+                            th:value="${item.id}"
+                            th:text="${item.id}+' - '+${item.name}"
+                            th:selected="${user.role.id == item.id}"
+                            >
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="col-6">
+
+        </div>
+    </div>
+    <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+</form>

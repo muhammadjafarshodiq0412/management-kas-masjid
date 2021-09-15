@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<head>
+    <title>Simbazka - Master Global Param</title>
+</head>
+<body>
+    <div class="container-fluid" layout:fragment="header">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Master Global Param</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a th:href="@{~/dashboard}">Simbazka</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{~/master}">Master</a></li>
+                    <li class="breadcrumb-item active">Global Param</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+
+    <!-- Small boxes (Stat box) -->
+    <div class="row" layout:fragment="content">
+        <!-- SWEET-ALERT2 -->
+        <div class="flash-data" th:attr="data-flashdata=${flash}">
+            <div class="message-data" th:attr="data-message=${message}">
+            </div>
+        </div>
+        <!-- END SWEET-ALEERT2 -->
+        <div class="col-12">
+            <div class="card card-default">
+                <div class="card-header bg-info">
+                    <h3 class="card-title">Master Global Param</h3>
+
+                    <div class="card-tools">
+                        <div class="input-group input-group-sm" style="width: 73px;">
+                                <a th:href="@{/master/global-param/add}" id="add-btn" type="button" class="btn btn-primary btn-action"><i class="fas fa-plus"></i>  ADD</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body table-responsive p-2">
+                    <table id="data-table" class="table table-hover text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>Condition</th>
+                                <th>Description</th>
+                                <th>value</th>
+                                <th>Information</th>
+                                <th style="width: 120px;">#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="item : ${data}">
+                                <td th:text="${item.paramCondition}"></td>
+                                <td th:text="${item.paramDesc}"></td>
+                                <td th:text="${item.paramValue}"></td>
+                                <td th:text="${item.info}"></td>
+                                <td>
+                                    <a th:href="@{/master/global-param/edit/{id}(id=${item.id})}" class="btn btn-warning btn-sm btn-action"> <i class="fa fa-edit"></i>  Edit</a>
+                                    <a th:href="@{/master/global-param/delete/{id}(id=${item.id})}" class="btn btn-danger btn-sm tombol-hapus"> <i class="fa fa-trash"></i>  Delete</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script layout:fragment="client-script">
+        $(function (){
+            console.log("master global-param ...")
+        });
+
+         <!-- SWEET-ALERT2 -->
+        $(function (){
+             const flashdata = $('.flash-data').data('flashdata');
+                console.log(flashdata)
+                const message = $('.message-data').data('message');
+                if (flashdata) {
+                    swal({
+                        title: message,
+                        text: 'Success ' + flashdata,
+                        type: 'success'
+                    });
+                }
+        });
+        <!-- SWEET-ALERT2 -->
+
+        $('.btn-action').on('click', function(e){
+            // stop direct url
+            e.preventDefault();
+            // call ajax
+            $.ajax({
+                url:$(this).attr('href'),
+                type:'GET',
+                dataType:'html',
+                success: function (data) {
+                    $('#main-modal').find('.modal-content').html(data);
+                    $('#main-modal').modal('show');
+                }
+            });
+        });
+
+        $('#main-modal').on('submit','#role-form', function (){
+            $.ajax({
+               url: $(this).attr('action'),
+               data: $(this).serialize(),
+                dataType: 'html',
+               type: 'POST',
+               success: function (data){
+                   // masukan dulu result ke modal
+                   $('#main-modal').find('.modal-content').html(data);
+                   // check jumlah element yang memiliki class has-error
+                   var check = $("#main-modal").find(".modal-content").find(".is-invalid").length;
+                   console.log("count invalid : "+ check);
+                   // jika tidak ada error
+                   if(check==0){
+                       $("#form-modal").modal('hide');
+                       location.reload();
+                   }
+               }
+            });
+            return false;
+        });
+
+        $('#data-table').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+
+        $('.tombol-hapus').on('click', function () {
+            event.preventDefault();
+            const href = $(this).attr("href");
+            swal({
+              title: 'Are you sure?',
+              text: "Delete Data",
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes'
+            }).then((result) => {
+              if (result.value) {
+                window.location.href = href;
+              }
+            });
+          });
+    </script>
+</body>
+</html>
