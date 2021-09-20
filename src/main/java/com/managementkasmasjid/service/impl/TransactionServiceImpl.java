@@ -1,20 +1,18 @@
 package com.managementkasmasjid.service.impl;
 
 import com.managementkasmasjid.constant.GlobalConstant;
-import com.managementkasmasjid.dto.request.CommonUserRequestDto;
-import com.managementkasmasjid.dto.request.DanaRequestDto;
+import com.managementkasmasjid.dto.request.DownloadFileRequest;
 import com.managementkasmasjid.dto.request.TransactionDto;
 import com.managementkasmasjid.entity.*;
 import com.managementkasmasjid.repository.*;
 import com.managementkasmasjid.service.*;
-import com.managementkasmasjid.utils.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -30,30 +28,29 @@ public class TransactionServiceImpl implements TransactionService {
     UserService userService;
     @Autowired
     DanaService danaService;
+    @Autowired
+    IAuthenticationFacade iAuthenticationFacade;
 
     @Override
     public Transaction save(TransactionDto request) {
-        log.info("Transaction Save");
+        Authentication authentication = iAuthenticationFacade.getAuthentication();
+        log.info("Transaction Save By User : "+ authentication.getName());
         Transaction result = new Transaction();
-        User user = userService.getById(request.getUser());
-        GlobalParam param = globalParamService.getById(request.getCategoryTransaction());
+        User user = userService.getByUsername(authentication.getName());
+        GlobalParam danaParam = globalParamService.getByParamConditionAndParamDesc(GlobalConstant.CATEGORY_DANA, request.getCategoryTransaction().getParamDesc());
         CommonUser commonUser = commonUserService.getById(request.getCommonUser());
-        Dana dana = danaService.getById(request.getCategoryDana());
+        Dana dana = danaService.getByCategoryCash(danaParam);
         try {
             BeanUtils.copyProperties(request, result, "user", "categoryTransaction", "commonUser", "categoryDana", "transactionDate");
             result.setUser(user);
             result.setCommonUser(commonUser);
-//            Dana danaRequestDto = new Dana();
-//            danaRequestDto.setId(dana.getId());
-
-//            danaRequestDto.setCategoryCash((dana.getCategoryCash().getId()));
-            if (param.getParamCondition().equalsIgnoreCase(GlobalConstant.PENERIMAAN)) {
+            if (request.getCategoryTransaction().getParamDesc().equalsIgnoreCase(GlobalConstant.PENERIMAAN)) {
                 dana.setCash(dana.getCash() + request.getAmount());
             } else {
-                dana.setCash(dana.getCash() - request.getAmount());
+                dana.setCash(dana.getCash() + request.getAmount());
             }
             danaService.update(dana); //update cash
-            result.setCategoryTransaction(param);
+            result.setCategoryTransaction(request.getCategoryTransaction());
             result.setCategoryDana(dana.getCategoryCash());
             transactionRepository.save(result);
             log.info("Transaction Save is successfully");
@@ -65,28 +62,25 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public Transaction update(TransactionDto request) {
-        log.info("Transaction Save");
+    public Transaction update(Transaction request) {
+        Authentication authentication = iAuthenticationFacade.getAuthentication();
+        log.info("Transaction Save By User : "+ authentication.getName());
         Transaction result = transactionRepository.findById(request.getId()).orElse(null);
-        User user = userService.getById(request.getUser());
-        GlobalParam param = globalParamService.getById(request.getCategoryTransaction());
-        CommonUser commonUser = commonUserService.getById(request.getCommonUser());
-        Dana dana = danaService.getById(request.getCategoryDana());
+        User user = userService.getByUsername(authentication.getName());
+        GlobalParam danaParam = globalParamService.getByParamConditionAndParamDesc(GlobalConstant.CATEGORY_DANA, request.getCategoryTransaction().getParamDesc());
+        CommonUser commonUser = commonUserService.getById(request.getCommonUser().getId());
+        Dana dana = danaService.getByCategoryCash(danaParam);
         try {
-            BeanUtils.copyProperties(request, result, "user", "categoryTransaction", "commonUser", "categoryDana", "transactionDate");
+            BeanUtils.copyProperties(request, result, "user", "commonUser","categoryDana", "transactionDate");
             result.setUser(user);
             result.setCommonUser(commonUser);
-//            DanaRequestDto danaRequestDto = new DanaRequestDto();
-//            danaRequestDto.setId(dana.getId());
-
-//            danaRequestDto.setCategoryCash((dana.getCategoryCash().getId()));
-            if (param.getParamCondition().equalsIgnoreCase(GlobalConstant.PENERIMAAN)) {
+            if (request.getCategoryTransaction().getParamDesc().equalsIgnoreCase(GlobalConstant.PENERIMAAN)) {
                 dana.setCash(dana.getCash() + request.getAmount());
             } else {
-                dana.setCash(dana.getCash() - request.getAmount());
+                dana.setCash(dana.getCash() + request.getAmount());
             }
             danaService.update(dana); //update cash
-            result.setCategoryTransaction(param);
+            result.setCategoryTransaction(request.getCategoryTransaction());
             result.setCategoryDana(dana.getCategoryCash());
             transactionRepository.save(result);
             log.info("Transaction Save is successfully");
@@ -151,6 +145,33 @@ public class TransactionServiceImpl implements TransactionService {
         }
         log.info("Data :: " + result.size());
         return result;
+    }
+
+    @Override
+    public List<Transaction> getAllByDate(GlobalParam globalParam, DownloadFileRequest downloadFileRequest) {
+        log.info("Transaction getAllByDate : "+downloadFileRequest.getFromDate() +" - "+downloadFileRequest.getUntilDate());
+        List<Transaction> result = new ArrayList<>();
+        try {
+            result = transactionRepository.findTransactionAlltByCategoryTransactionAndDate(globalParam,downloadFileRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error : " + e.getMessage());
+        }
+        log.info("Data :: " + result.size());
+        return result;
+    }
+
+    @Override
+    public Long getSaldo() {
+        log.info("getSaldo Started..");
+        GlobalParam penerimaan = globalParamService.getByParamConditionAndParamDesc(GlobalConstant.CATEGORY_DANA, GlobalConstant.PENERIMAAN.toUpperCase());
+        GlobalParam pengeluaran = globalParamService.getByParamConditionAndParamDesc(GlobalConstant.CATEGORY_DANA, GlobalConstant.PENGELUARAN.toUpperCase());
+        Dana danaPenerimaan = danaService.getByCategoryCash(penerimaan);
+        Dana danaPengeluaran = danaService.getByCategoryCash(pengeluaran);
+        Long saldo = danaPenerimaan.getCash() - danaPengeluaran.getCash();
+        log.info("Hitung Saldo : "+danaPenerimaan.getCash()+" - "+danaPengeluaran.getCash()+" = "+saldo);
+        log.info("getSaldo Accomplish..");
+        return saldo;
     }
 
 }

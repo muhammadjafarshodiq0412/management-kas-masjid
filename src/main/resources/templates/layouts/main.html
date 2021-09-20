@@ -6,41 +6,41 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Credit Score</title>
-
+    <title>Simbazka</title>
+    <link rel="shortcut icon" th:href="@{~/simbazka/dist/img/garuda64.ico}">
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
-    <link rel="stylesheet" th:href="@{~/plugins/fontawesome-free/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{~/simbazka/plugins/fontawesome-free/css/all.min.css}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Tempusdominus Bootstrap 4 -->
-    <link rel="stylesheet" th:href="@{~/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css}">
+    <link rel="stylesheet" th:href="@{~/simbazka/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css}">
     <!-- daterange picker -->
-    <link rel="stylesheet" th:href="@{~/plugins/daterangepicker/daterangepicker.css}">
+    <link rel="stylesheet" th:href="@{~/simbazka/plugins/daterangepicker/daterangepicker.css}">
     <!-- iCheck -->
-    <link rel="stylesheet" th:href="@{~/plugins/icheck-bootstrap/icheck-bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{~/simbazka/plugins/icheck-bootstrap/icheck-bootstrap.min.css}">
     <!-- sweetalert css-->
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'>
     <!-- JQVMap -->
-    <link rel="stylesheet" th:href="@{~/plugins/jqvmap/jqvmap.min.css}">
+    <link rel="stylesheet" th:href="@{~/simbazka/plugins/jqvmap/jqvmap.min.css}">
     <!-- Theme style -->
-    <link rel="stylesheet" th:href="@{~/dist/css/adminlte.min.css}">
+    <link rel="stylesheet" th:href="@{~/simbazka/dist/css/adminlte.min.css}">
     <!-- overlayScrollbars -->
-    <link rel="stylesheet" th:href="@{~/plugins/overlayScrollbars/css/OverlayScrollbars.min.css}">
+    <link rel="stylesheet" th:href="@{~/simbazka/plugins/overlayScrollbars/css/OverlayScrollbars.min.css}">
     <!-- DataTables -->
-    <link rel="stylesheet" th:href="@{~/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}">
-    <link rel="stylesheet" th:href="@{~/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}">
-    <link rel="stylesheet" th:href="@{~/plugins/datatables-buttons/css/buttons.bootstrap4.min.css}">
+    <link rel="stylesheet" th:href="@{~/simbazka/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}">
+    <link rel="stylesheet" th:href="@{~/simbazka/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}">
+    <link rel="stylesheet" th:href="@{~/simbazka/plugins/datatables-buttons/css/buttons.bootstrap4.min.css}">
     <!-- summernote -->
-    <link rel="stylesheet" th:href="@{~/plugins/summernote/summernote-bs4.min.css}">
+    <link rel="stylesheet" th:href="@{~/simbazka/plugins/summernote/summernote-bs4.min.css}">
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
     <!-- Preloader -->
     <div class="preloader flex-column justify-content-center align-items-center">
-        <img class="animation__shake" th:src="@{~/dist/img/AdminLTELogo.png}" alt="AdminLTELogo" height="60" width="60">
+        <img class="animation__shake" th:src="@{~/simbazka/dist/img/garuda.png}" alt="AdminLTELogo" height="60" width="60">
     </div>
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light" th:replace="~{fragments/main-header :: main-header}">
@@ -84,11 +84,9 @@
 
     <!-- /.content-wrapper -->
     <footer class="main-footer">
-        <strong>Copyright &copy; 2021 <a href="#">Sistem Informasi BAZNAZ Karawang</a>.</strong>
-        All rights reserved.
-<!--        <div class="float-right d-none d-sm-inline-block">-->
-<!--            <b>Version</b> 3.1.0-->
-<!--        </div>-->
+       <marquee>
+        <strong>Hak Cipta &copy; 2021 <a href="#">Sistem Informasi BAZNAZ Karawang</a>.</strong>
+        </marquee>
     </footer>
 
     <!-- Control Sidebar -->
@@ -102,12 +100,12 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script th:src="@{~/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{~/simbazka/plugins/jquery/jquery.min.js}"></script>
 <!-- jquery-validation -->
-<script th:src="@{~/plugins/jquery-validation/jquery.validate.min.js}"></script>
-<script th:src="@{~/plugins/jquery-validation/additional-methods.min.js}"></script>
+<script th:src="@{~/simbazka/plugins/jquery-validation/jquery.validate.min.js}"></script>
+<script th:src="@{~/simbazka/plugins/jquery-validation/additional-methods.min.js}"></script>
 <!-- jQuery UI 1.11.4 -->
-<script th:src="@{~/plugins/jquery-ui/jquery-ui.min.js}"></script>
+<script th:src="@{~/simbazka/plugins/jquery-ui/jquery-ui.min.js}"></script>
 <!-- sweetalert js-->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -119,34 +117,34 @@
     }
 </script>
 <!-- Bootstrap 4 -->
-<script th:src="@{~/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{~/simbazka/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
 <!-- bs-custom-file-input -->
-<script th:src="@{~/plugins/bs-custom-file-input/bs-custom-file-input.min.js}"></script>
+<script th:src="@{~/simbazka/plugins/bs-custom-file-input/bs-custom-file-input.min.js}"></script>
 <!-- Sparkline -->
-<script th:src="@{~/plugins/sparklines/sparkline.js}"></script>
+<script th:src="@{~/simbazka/plugins/sparklines/sparkline.js}"></script>
 <!-- daterangepicker -->
-<script th:src="@{~/plugins/moment/moment.min.js}"></script>
-<script th:src="@{~/plugins/daterangepicker/daterangepicker.js}"></script>
+<script th:src="@{~/simbazka/plugins/moment/moment.min.js}"></script>
+<script th:src="@{~/simbazka/plugins/daterangepicker/daterangepicker.js}"></script>
 <!-- Tempusdominus Bootstrap 4 -->
-<script th:src="@{~/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js}"></script>
+<script th:src="@{~/simbazka/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js}"></script>
 <!-- Summernote -->
-<script th:src="@{~/plugins/summernote/summernote-bs4.min.js}"></script>
+<script th:src="@{~/simbazka/plugins/summernote/summernote-bs4.min.js}"></script>
 <!-- overlayScrollbars -->
-<script th:src="@{~/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js}"></script>
+<script th:src="@{~/simbazka/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js}"></script>
 <!-- DataTables  & Plugins -->
-<script th:src="@{~/plugins/datatables/jquery.dataTables.min.js}"></script>
-<script th:src="@{~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
-<script th:src="@{~/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
-<script th:src="@{~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
-<script th:src="@{~/plugins/datatables-buttons/js/dataTables.buttons.min.js}"></script>
-<script th:src="@{~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js}"></script>
-<script th:src="@{~/plugins/datatables-buttons/js/buttons.html5.min.js}"></script>
-<script th:src="@{~/plugins/datatables-buttons/js/buttons.print.min.js}"></script>
-<script th:src="@{~/plugins/datatables-buttons/js/buttons.colVis.min.js}"></script>
+<script th:src="@{~/simbazka/plugins/datatables/jquery.dataTables.min.js}"></script>
+<script th:src="@{~/simbazka/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+<script th:src="@{~/simbazka/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
+<script th:src="@{~/simbazka/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
+<script th:src="@{~/simbazka/plugins/datatables-buttons/js/dataTables.buttons.min.js}"></script>
+<script th:src="@{~/simbazka/plugins/datatables-buttons/js/buttons.bootstrap4.min.js}"></script>
+<script th:src="@{~/simbazka/plugins/datatables-buttons/js/buttons.html5.min.js}"></script>
+<script th:src="@{~/simbazka/plugins/datatables-buttons/js/buttons.print.min.js}"></script>
+<script th:src="@{~/simbazka/plugins/datatables-buttons/js/buttons.colVis.min.js}"></script>
 <!-- AdminLTE App -->
-<script th:src="@{~/dist/js/adminlte.js}"></script>
+<script th:src="@{~/simbazka/dist/js/adminlte.js}"></script>
 <!-- AdminLTE for demo purposes -->
-<script th:src="@{~/dist/js/demo.js}"></script>
+<script th:src="@{~/simbazka/dist/js/demo.js}"></script>
 <div layout:fragment="client-script"></div>
 </body>
 </html>

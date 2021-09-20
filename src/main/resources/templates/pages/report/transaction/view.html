@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<head>
+    <title>Simbazka</title>
+</head>
+<body>
+<div class="container-fluid" layout:fragment="header">
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1 class="m-0">Transaksi <span th:text="${category}"></span></h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a th:href="@{~/dashboard}">Simbazka</a></li>
+                <li class="breadcrumb-item">Transaksi</li>
+                <li class="breadcrumb-item active" th:text="${category}"></li>
+            </ol>
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div><!-- /.container-fluid -->
+
+<!-- Small boxes (Stat box) -->
+<div class="row" layout:fragment="content">
+    <div class="col-12">
+        <div class="card card-default">
+            <div class="card-header bg-info">
+                <h3 class="card-title">Transaksi <span th:text="${category}"></span></h3>
+
+                <div class="card-tools">
+                    <div class="input-group input-group-sm">
+                        <a th:href="@{/report/transaction/{category}/{format}/{from}/{until}(category=${category}, format=pdf,from=${fromDate},until=${untilDate})}" type="button" class="btn btn-danger"><i class="fas fa-file-pdf"></i>  PDF</a>
+<!--                        <a th:href="@{/report/transaction/{category}/{format}/{from}/{until}(category=${category}, format=xlsx,from=${fromDate},until=${untilDate})}" type="button" class="btn btn-success"><i class="fas fa-file-excell"></i>  Excell</a>-->
+                    </div>
+                </div>
+            </div>
+            <div class="card-body table-responsive p-2">
+                <table id="data-table" class="table table-hover text-nowrap">
+                    <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>Jumlah</th>
+                        <th>Tanggal</th>
+                        <th>Pengguna</th>
+                        <th>Informasi</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item : ${data}">
+                        <td th:text="${item.commonUser.name}"></td>
+                        <td th:text="${item.amount}"></td>
+                        <td th:text="${#calendars.format(item.transactionDate, 'dd-MM-yyyy')}"></td>
+                        <td th:text="${item.user.username}"></td>
+                        <td th:text="${item.info}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script layout:fragment="client-script">
+        $(function (){
+            console.log("Transaction ...")
+        });
+
+        $('#data-table').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+
+    </script>
+</body>
+</html>

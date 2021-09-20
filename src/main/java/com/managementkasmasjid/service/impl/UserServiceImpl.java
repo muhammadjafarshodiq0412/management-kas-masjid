@@ -103,9 +103,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getByEmail(String email) {
+    public User getByUsername(String username) {
         log.info("User getByUsername");
-        User result = userRepository.findByUsername(email);
+        User result = userRepository.findByUsername(username);
         if (result != null) {
             log.info("User getByUsername is successfully");
         } else {

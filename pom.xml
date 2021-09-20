@@ -16,6 +16,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<spring-security-crypto.version>5.5.1</spring-security-crypto.version>
+<!--		<spring-jasperreports>6.9.0</spring-jasperreports>-->
 	</properties>
 	<dependencies>
 		<dependency>
@@ -41,7 +42,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-<!--		IMPLEMENT SPRING SECURITY WITH THYMELLEAF-->
+<!--		IMPLEMENT SPRING SECURITY WITH THYMELEAF-->
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
@@ -81,6 +82,13 @@
 			<artifactId>spring-security-crypto</artifactId>
 			<version>${spring-security-crypto.version}</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>6.17.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

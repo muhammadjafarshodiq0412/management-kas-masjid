@@ -30,12 +30,12 @@
                         <div class="inner">
                             <h3 th:text="${userCount}">150</h3>
 
-                            <p>Users</p>
+                            <p>Pengguna</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-person"></i>
                         </div>
-                        <a th:href="@{/scoring/business/list}" class="small-box-footer detail-link">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a th:href="@{/master/user}" class="small-box-footer">Detail <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -48,9 +48,9 @@
                             <p>Roles</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-person-add"></i>
+                            <i class="ion ion-key"></i>
                         </div>
-                        <a th:href="@{/scoring/upload}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a th:href="@{/master/role}" class="small-box-footer">Detail <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
 
@@ -58,14 +58,14 @@
                     <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>2</h3>
+                            <h3 th:text="${cashIn}">2</h3>
 
-                            <p>Download Template Retail</p>
+                            <p>Total Penerimaan Dana</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-arrow-down-a"></i>
+                            <i class="ion ion-cash"></i>
                         </div>
-                        <a th:href="@{/home/download}" class="small-box-footer detail-link">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a th:href="@{/transaction/penerimaan}" class="small-box-footer">Detail<i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
 
@@ -73,14 +73,14 @@
                     <!-- small box -->
                     <div class="small-box bg-primary">
                         <div class="inner">
-                            <h3>2</h3>
+                            <h3 th:text="${cashOut}">2</h3>
 
-                            <p>Upload Scoring</p>
+                            <p>Total Penegluaran Dana</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-arrow-up-a"></i>
+                            <i class="ion ion-cash"></i>
                         </div>
-                        <a th:href="@{/home/upload}" class="small-box-footer detail-link">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a th:href="@{/transaction/pengeluaran}" class="small-box-footer ">Detail <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>

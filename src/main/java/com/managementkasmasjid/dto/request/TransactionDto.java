@@ -1,5 +1,6 @@
 package com.managementkasmasjid.dto.request;
 
+import com.managementkasmasjid.entity.GlobalParam;
 import lombok.Data;
 
 import java.util.Date;
@@ -8,11 +9,8 @@ import java.util.Date;
 public class TransactionDto {
     private Long id;
     private Long amount;
-    private Date transactionDate;
     private String info;
-    private Long user;
-    private Long categoryTransaction;
+    private GlobalParam categoryTransaction;
     private Long commonUser;
-    private Long categoryDana;
 
 }

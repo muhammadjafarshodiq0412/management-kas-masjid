@@ -1,11 +1,13 @@
 package com.managementkasmasjid.service.impl;
 
+import com.managementkasmasjid.constant.GlobalConstant;
 import com.managementkasmasjid.dto.request.DanaRequestDto;
 import com.managementkasmasjid.entity.Dana;
 import com.managementkasmasjid.entity.GlobalParam;
 import com.managementkasmasjid.repository.DanaRepository;
 import com.managementkasmasjid.repository.GlobalParamRepository;
 import com.managementkasmasjid.service.DanaService;
+import com.managementkasmasjid.service.GlobalParamService;
 import com.managementkasmasjid.utils.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -22,13 +24,13 @@ public class DanaServiceImpl implements DanaService {
     @Autowired
     CommonUtil util;
     @Autowired
-    GlobalParamRepository globalParamRepository;
+    GlobalParamService globalParamService;
 
     @Override
     public Dana save(Dana request) {
         log.info("Dana Save");
         Dana dana = new Dana();
-        GlobalParam paramDto = globalParamRepository.getById(request.getCategoryCash().getId());
+        GlobalParam paramDto = globalParamService.getById(request.getCategoryCash().getId());
         try {
             BeanUtils.copyProperties(request, dana, "categoryCash");
             dana.setCategoryCash(paramDto);
@@ -45,7 +47,7 @@ public class DanaServiceImpl implements DanaService {
     public Dana update(Dana request) {
         log.info("Dana Update");
         Dana result = danaRepository.findById(request.getId()).orElse(null);
-        GlobalParam paramDto = globalParamRepository.getById(request.getCategoryCash().getId());
+        GlobalParam paramDto = globalParamService.getById(request.getCategoryCash().getId());
         if (result != null) {
             BeanUtils.copyProperties(request, result, "categoryCash");
             result.setCategoryCash(paramDto);
@@ -90,6 +92,19 @@ public class DanaServiceImpl implements DanaService {
         log.info("Dana getAll");
         List<Dana> result = danaRepository.findAll();
         log.info("Data :: " + result.size());
+        return result;
+    }
+
+    @Override
+    public Dana getByCategoryCash(GlobalParam categoryCash) {
+        log.info("Dana getCategoryCash");
+        Dana result = danaRepository.findByCategoryCash(categoryCash);
+        if (result != null) {
+            log.info("Dana getCategoryCash is successfully");
+        } else {
+            result = new Dana();
+            log.info("Dana is Not Found");
+        }
         return result;
     }
 }

@@ -2,11 +2,8 @@ package com.managementkasmasjid.controller.master;
 
 import com.managementkasmasjid.constant.GlobalConstant;
 import com.managementkasmasjid.entity.CommonUser;
-import com.managementkasmasjid.entity.Dana;
 import com.managementkasmasjid.entity.GlobalParam;
-import com.managementkasmasjid.entity.User;
 import com.managementkasmasjid.service.CommonUserService;
-import com.managementkasmasjid.service.DanaService;
 import com.managementkasmasjid.service.GlobalParamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,8 +16,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping("/master/common-user")
-public class CommonUserController {
+@RequestMapping("/master/mustahik")
+public class MustahikController {
     @Autowired
     private CommonUserService commonUserService;
     @Autowired
@@ -28,16 +25,16 @@ public class CommonUserController {
 
     @GetMapping("")
     public String index(Model model){
-        model.addAttribute("data", commonUserService.getAll());
-        return "pages/master/common_user/index";
+        model.addAttribute("data", commonUserService.getAllMustahik());
+        return "pages/master/mustahik/index";
     }
 
     @GetMapping("/add")
     public String add(Model model){
-        List<GlobalParam> params = globalParamService.getAllByCondition(GlobalConstant.CATEGORY_COMMON_USER);
+        List<GlobalParam> params = globalParamService.getAllByParamDesc(GlobalConstant.MUSTAHIK.toUpperCase());
         model.addAttribute("data",new CommonUser());
         model.addAttribute("params",params);
-        return "pages/master/common_user/add";
+        return "pages/master/mustahik/add";
     }
 
     @PostMapping("/save")
@@ -51,7 +48,7 @@ public class CommonUserController {
             model.addAttribute("data", new CommonUser());
         }
 
-        return "redirect:/master/common-user";
+        return "redirect:/master/mustahik";
     }
 
     @GetMapping("/delete/{id}")
@@ -59,16 +56,16 @@ public class CommonUserController {
         redirectAttributes.addFlashAttribute("message", "Congratulation");
         redirectAttributes.addFlashAttribute("flash", "Delete");
         this.commonUserService.delete(id);
-        return "redirect:/master/common-user";
+        return "redirect:/master/mustahik";
     }
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id, Model model){
         CommonUser data = this.commonUserService.getById(id);
-        List<GlobalParam> params = globalParamService.getAllByCondition(GlobalConstant.CATEGORY_COMMON_USER);
+        List<GlobalParam> params = globalParamService.getAllByParamDesc(GlobalConstant.MUSTAHIK.toUpperCase());
         model.addAttribute("data",data);
         model.addAttribute("params",params);
-        return "pages/master/common_user/edit";
+        return "pages/master/mustahik/edit";
     }
 
     @PostMapping("/update")
@@ -76,6 +73,6 @@ public class CommonUserController {
         this.commonUserService.update(request);
         redirectAttributes.addFlashAttribute("flash", "Update");
         redirectAttributes.addFlashAttribute("message", "Congratulation");
-        return "redirect:/master/common-user";
+        return "redirect:/master/mustahik";
     }
 }

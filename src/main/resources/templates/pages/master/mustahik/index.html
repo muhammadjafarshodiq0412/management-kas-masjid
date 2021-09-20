@@ -3,19 +3,19 @@
       xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
 <head>
-    <title>Simbazka - Master Common User</title>
+    <title>Simbazka - Master Mustahik</title>
 </head>
 <body>
     <div class="container-fluid" layout:fragment="header">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Master Common User</h1>
+                <h1 class="m-0">Master Mustahik</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a th:href="@{~/dashboard}">Simbazka</a></li>
-                    <li class="breadcrumb-item"><a th:href="@{~/master}">Master</a></li>
-                    <li class="breadcrumb-item active">Common User</li>
+                    <li class="breadcrumb-item">Master</li>
+                    <li class="breadcrumb-item active">Mustahik</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -32,11 +32,11 @@
         <div class="col-12">
             <div class="card card-default">
                 <div class="card-header bg-info">
-                    <h3 class="card-title">Master Common User</h3>
+                    <h3 class="card-title">Master Mustahik</h3>
 
                     <div class="card-tools">
-                        <div class="input-group input-group-sm" style="width: 73px;">
-                                <a th:href="@{/master/common-user/add}" id="add-btn" type="button" class="btn btn-primary btn-action"><i class="fas fa-plus"></i>  ADD</a>
+                        <div class="input-group input-group-sm" style="width: 100px;">
+                                <a th:href="@{/master/mustahik/add}" id="add-btn" type="button" class="btn btn-primary btn-action"><i class="fas fa-plus"></i>  Tanbah</a>
                         </div>
                     </div>
                 </div>
@@ -44,12 +44,12 @@
                     <table id="data-table" class="table table-hover text-nowrap">
                         <thead>
                             <tr>
-                                <th>Name</th>
+                                <th>Nama</th>
                                 <th>Email</th>
-                                <th>Phone Number</th>
-                                <th>Address</th>
-                                <th>Category</th>
-                                <th style="width: 120px;">#</th>
+                                <th>Nomor Telepon</th>
+                                <th>Alamat</th>
+                                <th>Kategori</th>
+                                <th style="width: 120px;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -60,8 +60,8 @@
                                 <td th:text="${item.address}"></td>
                                 <td th:text="${item.categoryCommonUser.paramValue}"></td>
                                 <td>
-                                    <a th:href="@{/master/common-user/edit/{id}(id=${item.id})}" class="btn btn-warning btn-sm btn-action"> <i class="fa fa-edit"></i>  Edit</a>
-                                    <a th:href="@{/master/common-user/delete/{id}(id=${item.id})}" class="btn btn-danger btn-sm tombol-hapus"> <i class="fa fa-edit"></i>  Delete</a>
+                                    <a th:href="@{/master/mustahik/edit/{id}(id=${item.id})}" class="btn btn-warning btn-sm btn-action"> <i class="fa fa-edit"></i>  Ubah</a>
+                                    <a th:href="@{/master/mustahik/delete/{id}(id=${item.id})}" class="btn btn-danger btn-sm tombol-hapus"> <i class="fa fa-edit"></i>  Hapus</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -72,7 +72,17 @@
     </div>
     <script layout:fragment="client-script">
         $(function (){
-            console.log("master common-user ...")
+            console.log("master mustahik ...")
+        });
+
+        $('#data-table').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": false,
         });
 
          <!-- SWEET-ALERT2 -->
@@ -90,20 +100,22 @@
         });
         <!-- SWEET-ALERT2 -->
 
-        $('.btn-action').on('click', function(e){
-            // stop direct url
-            e.preventDefault();
-            // call ajax
-            $.ajax({
-                url:$(this).attr('href'),
-                type:'GET',
-                dataType:'html',
-                success: function (data) {
-                    $('#main-modal').find('.modal-content').html(data);
-                    $('#main-modal').modal('show');
-                }
+         $(document).ready(function () {
+         $('body').on('click', '.btn-action', function () {
+                // stop direct url
+                event.preventDefault();
+                // call ajax
+                $.ajax({
+                    url:$(this).attr('href'),
+                    type:'GET',
+                    dataType:'html',
+                    success: function (data) {
+                        $('#main-modal').find('.modal-content').html(data);
+                        $('#main-modal').modal('show', {backdrop: 'true'});
+                    }
+                });
             });
-        });
+         });
 
         $('#main-modal').on('submit','#role-form', function (){
             $.ajax({
@@ -125,16 +137,6 @@
                }
             });
             return false;
-        });
-
-        $('#data-table').DataTable({
-            "paging": true,
-            "lengthChange": true,
-            "searching": true,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
         });
 
          $('.tombol-hapus').on('click', function () {

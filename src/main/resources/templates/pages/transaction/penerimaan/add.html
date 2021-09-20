@@ -1,0 +1,44 @@
+<form th:action="@{/transaction/penerimaan/save}" th:object="${data}" method="post">
+    <div class="modal-header">
+        <h4 class="modal-title">Transaksi Penerimaan</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body row">
+        <div class="col-12">
+            <div class="form-group">
+                <label>Jumlah</label>
+                <input type="number" th:field="*{amount}" th:class="${#fields.hasErrors('amount')} ? 'form-control is-invalid':'form-control'"/>
+                <span th:if="${#fields.hasErrors('amount')}" class="error invalid-feedback" th:errors="*{amount}">pesan error</span>
+            </div>
+            <div class="form-group">
+                <label>Muzakki</label>
+                <select  class="form-control" required="required"
+                         name="commonUser" id="commonUser">
+                    <option disabled="disabled" > --
+                        Pilih --
+                    </option>
+                    <option th:each="item : ${params}"
+                            th:value="${item.id}"
+                            th:text="${item.id}+' - '+${item.name}"
+                    >
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Informasi</label>
+                <input type="text" th:field="*{info}" th:class="${#fields.hasErrors('info')} ? 'form-control is-invalid':'form-control'"/>
+                <span th:if="${#fields.hasErrors('info')}" class="error invalid-feedback" th:errors="*{info}">pesan error</span>
+            </div>
+
+        </div>
+        <div class="col-6">
+
+        </div>
+    </div>
+    <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+    </div>
+</form>

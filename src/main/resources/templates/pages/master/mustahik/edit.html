@@ -1,6 +1,6 @@
-<form th:action="@{/master/common-user/save}" th:object="${data}" method="post">
+<form th:action="@{/master/mustahik/update}" th:object="${data}" method="post">
     <div class="modal-header">
-        <h4 class="modal-title">Master Common User</h4>
+        <h4 class="modal-title">Master Mustahik</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -9,6 +9,7 @@
         <div class="col-12">
             <div class="form-group">
                 <label>Nama</label>
+                <input type="hidden" name="id" id="id" th:value="${data.id}">
                 <input type="text" th:field="*{name}" th:class="${#fields.hasErrors('name')} ? 'form-control is-invalid':'form-control'"/>
                 <span th:if="${#fields.hasErrors('name')}" class="error invalid-feedback" th:errors="*{name}">pesan error</span>
             </div>
@@ -31,12 +32,13 @@
                 <label>Kategori</label>
                 <select  class="form-control" required="required"
                          name="categoryCommonUser" id="categoryCommonUser">
-                    <option disabled="disabled" > --
-                        Pilih --
-                    </option>
+<!--                    <option disabled="disabled" > &#45;&#45;-->
+<!--                        Pilih &#45;&#45;-->
+<!--                    </option>-->
                     <option th:each="item : ${params}"
                             th:value="${item.id}"
                             th:text="${item.id}+' - '+${item.paramValue}"
+                            th:selected="${data.categoryCommonUser.id == item.id}"
                     >
                     </option>
                 </select>
@@ -47,7 +49,7 @@
         </div>
     </div>
     <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
     </div>
 </form>

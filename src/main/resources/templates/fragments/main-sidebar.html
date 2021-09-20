@@ -4,8 +4,8 @@
        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <!-- Brand Logo -->
     <a th:href="@{~/dashboard}" class="brand-link">
-        <img th:src="@{~/dist/img/AdminLTELogo.png}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">Simbazka</span>
+        <img th:src="@{~/simbazka/dist/img/garuda.png}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">SIMBAZKA</span>
     </a>
 
     <!-- Sidebar -->
@@ -13,31 +13,19 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img th:src="@{~/dist/img/user2-160x160.jpg}" class="img-circle elevation-2" alt="User Image">
+                <img th:src="@{~/simbazka/dist/img/user.png}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
                 <a href="#" class="d-block" sec:authentication="name">Haryo</a>
             </div>
         </div>
 
-        <!-- SidebarSearch Form -->
-        <!--div class="form-inline">
-            <div class="input-group" data-widget="sidebar-search">
-                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-sidebar">
-                        <i class="fas fa-search fa-fw"></i>
-                    </button>
-                </div>
-            </div>
-        </div -->
-
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item" sec:authorize="hasAnyRole('ROLE_SUPER_USER','ROLE_ADMINISTRATOR','ROLE_ADMIN')">
                     <a th:href="@{/master/}" class="nav-link">
-                        <i class="nav-icon fas fa-cog"></i>
+                        <i class="nav-icon far fa-folder"></i>
                         <p>
                             Master
                             <i class="right fas fa-angle-left"></i>
@@ -46,39 +34,45 @@
                     <ul class="nav nav-treeview ml-2">
                         <li class="nav-item">
                             <a th:href="@{/master/user}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>User</p>
+                                <i class="fas fa-users nav-icon"></i>
+                                <p>Pengguna</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a th:href="@{/master/role}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fas fa-user-lock nav-icon"></i>
                                 <p>Role</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a th:href="@{/master/dana}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fas fa-wallet nav-icon"></i>
                                 <p>Dana</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a th:href="@{/master/common-user}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Common User</p>
+                            <a th:href="@{/master/muzakki}" class="nav-link">
+                                <i class="fas fa-id-badge nav-icon"></i>
+                                <p>Muzakki</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a th:href="@{/master/mustahik}" class="nav-link">
+                                <i class="fas fa-id-badge nav-icon"></i>
+                                <p>Mustahik</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a th:href="@{/master/global-param}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Global Param</p>
+                                <i class="fas fa-list-alt nav-icon"></i>
+                                <p>Kategori</p>
                             </a>
                         </li>
                     </ul>
                 </li>
                 <li class="nav-item" sec:authorize="hasAnyRole('ROLE_SUPER_USER','ROLE_ADMINISTRATOR','ROLE_ADMIN')">
                     <a th:href="@{/transaction/}" class="nav-link">
-                        <i class="nav-icon fas fa-cog"></i>
+                        <i class="nav-icon far fa-folder"></i>
                         <p>
                             Transaksi
                             <i class="right fas fa-angle-left"></i>
@@ -87,13 +81,13 @@
                     <ul class="nav nav-treeview ml-2">
                         <li class="nav-item">
                             <a th:href="@{/transaction/penerimaan}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fas fa-file-alt nav-icon"></i>
                                 <p>Penerimaan</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a th:href="@{/transaction/pengeluaran}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fas fa-file-alt nav-icon"></i>
                                 <p>Pengeluaran</p>
                             </a>
                         </li>
@@ -101,58 +95,29 @@
                 </li>
                 <li class="nav-item" sec:authorize="hasAnyRole('ROLE_SUPER_USER','ROLE_ADMINISTRATOR','ROLE_ADMIN')">
                     <a th:href="@{/report/}" class="nav-link">
-                        <i class="nav-icon fas fa-cog"></i>
+                        <i class="nav-icon far fa-folder"></i>
                         <p>
                             Laporan
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
+
                     <ul class="nav nav-treeview ml-2">
                         <li class="nav-item">
-                            <a th:href="@{/report/}" class="nav-link">
-                                <i class="nav-icon fas fa-cog"></i>
+                            <a th:href="@{/report/journal}" class="nav-link">
+                                <i class="fas fa-file-alt nav-icon"></i>
                                 <p>
                                     Jurnal
-                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview ml-2">
-                                <li class="nav-item">
-                                    <a th:href="@{/report/journal}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Penerimaan</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a th:href="@{/report/pengeluaran}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Pengeluaran</p>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
                         <li class="nav-item">
-                            <a th:href="@{/report/}" class="nav-link">
-                                <i class="nav-icon fas fa-cog"></i>
+                            <a th:href="@{/report/transaction}" class="nav-link">
+                                <i class="fas fa-file-alt nav-icon"></i>
                                 <p>
-                                    Traksaksi
-                                    <i class="right fas fa-angle-left"></i>
+                                    Transaksi
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview ml-2">
-                                <li class="nav-item">
-                                    <a th:href="@{/report/journal}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Penerimaan</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a th:href="@{/report/pengeluaran}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Pengeluaran</p>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
                     </ul>
                 </li>

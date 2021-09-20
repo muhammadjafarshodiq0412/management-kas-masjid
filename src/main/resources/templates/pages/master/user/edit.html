@@ -1,6 +1,6 @@
 <form th:action="@{/master/user/update}" th:object="${user}" method="post">
     <div class="modal-header">
-        <h4 class="modal-title">Master Role</h4>
+        <h4 class="modal-title">Master Pengguna</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -8,7 +8,7 @@
     <div class="modal-body row">
         <div class="col-12">
             <div class="form-group">
-                <label>Username</label>
+                <label>Nama Pengguna</label>
                 <input type="hidden" name="id" id="id" th:value="${user.id}">
                 <input type="text" th:field="*{username}" th:class="${#fields.hasErrors('username')} ? 'form-control is-invalid':'form-control'"/>
                 <span th:if="${#fields.hasErrors('username')}" class="error invalid-feedback" th:errors="*{username}">pesan error</span>
@@ -19,7 +19,7 @@
                 <span th:if="${#fields.hasErrors('email')}" class="error invalid-feedback" th:errors="*{email}">pesan error</span>
             </div>
             <div class="form-group">
-                <label>Password</label>
+                <label>Kata Sandi</label>
                 <input type="password" th:field="*{password}" th:class="${#fields.hasErrors('password')} ? 'form-control is-invalid':'form-control'"/>
                 <span th:if="${#fields.hasErrors('password')}" class="error invalid-feedback" th:errors="*{password}">pesan error</span>
             </div>
@@ -44,7 +44,7 @@
         </div>
     </div>
     <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
     </div>
 </form>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<head>
+    <title>Simbazka</title>
+</head>
+<body>
+<div class="container-fluid" layout:fragment="header">
+
+</div><!-- /.container-fluid -->
+
+<!-- Small boxes (Stat box) -->
+<div class="row" layout:fragment="content">
+    <div class="col-12 p-3">
+        <div class="card card-default">
+            <div class="card-header bg-info">
+                <h3 class="card-title">Jurnal</h3>
+            </div>
+            <form id="report-form" th:action="@{/report/journal/view-report}" th:object="${data}" method="post">
+                <div class="modal-body row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>Dari Tanggal</label>
+                            <input type="date" th:field="*{fromDate}" th:class="${#fields.hasErrors('fromDate')} ? 'form-control is-invalid':'form-control'"/>
+                            <span th:if="${#fields.hasErrors('fromDate')}" class="error invalid-feedback" th:errors="*{fromDate}">pesan error</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Sampai Tanggal</label>
+                            <input type="date" th:field="*{untilDate}" th:class="${#fields.hasErrors('untilDate')} ? 'form-control is-invalid':'form-control'"/>
+                            <span th:if="${#fields.hasErrors('untilDate')}" class="error invalid-feedback" th:errors="*{untilDate}">pesan error</span>
+                        </div>
+                        <div class="form-group">
+                        <label>Kategori</label>
+                        <select  class="form-control" required="required"
+                                 name="category" id="category">
+                            <option disabled="disabled" > --
+                                Pilih --
+                            </option>
+                            <option th:each="item : ${params}"
+                                    th:value="${item.id}"
+                                    th:text="${item.id}+' - '+${item.paramValue}"
+                            >
+                            </option>
+                        </select>
+                    </div>
+                    </div>
+                        <div class="col-6">
+
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="submit" class="btn btn-primary" > Cari</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--<script layout:fragment="client-script">-->
+<!--       $(document).ready(function () {-->
+<!--         $('body').on('submit', '#report-form', function () {-->
+<!--                const action= $(this).attr('action');-->
+<!--                const format = $('.cetak').attr('id');-->
+<!--                console.log(action + format);-->
+<!--                document.getElementById('#report-form').action = action + format;-->
+
+<!--                 event.preventDefault();-->
+<!--         });-->
+<!--        });-->
+
+<!--    </script>-->
+</body>
+</html>

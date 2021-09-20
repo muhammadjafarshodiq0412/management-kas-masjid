@@ -14,7 +14,7 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a th:href="@{~/dashboard}">Simbazka</a></li>
-                    <li class="breadcrumb-item"><a th:href="@{~/master}">Master</a></li>
+                    <li class="breadcrumb-item">Master</li>
                     <li class="breadcrumb-item active">Role</li>
                 </ol>
             </div><!-- /.col -->
@@ -35,8 +35,8 @@
                     <h1 th:text="${session.flash}"></h1>
                     <h3 class="card-title">Master Role</h3>
                     <div class="card-tools">
-                        <div class="input-group input-group-sm" style="width: 73px;">
-                                <a th:href="@{/master/role/add}" id="add-btn" type="button" class="btn btn-primary btn-action"><i class="fas fa-plus"></i>  ADD</a>
+                        <div class="input-group input-group-sm" style="width: 100px;">
+                                <a th:href="@{/master/role/add}" id="add-btn" type="button" class="btn btn-primary btn-action"><i class="fas fa-plus"></i>  Tambah</a>
                         </div>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                                 <td th:text="${item.code}"></td>
                                 <td th:text="${item.name}"></td>
                                 <td>
-                                    <a th:href="@{/master/role/edit/{id}(id=${item.id})}" class="btn btn-warning btn-sm btn-action"> <i class="fa fa-edit"></i>  Edit</a>
+                                    <a th:href="@{/master/role/edit/{id}(id=${item.id})}" class="btn btn-warning btn-sm btn-action"> <i class="fa fa-edit"></i>  Ubah</a>
                                     <a th:href="@{/master/role/delete/{id}(id=${item.id})}" class="btn btn-danger btn-sm tombol-hapus"> <i class="fa fa-edit"></i>  Hapus</a>
                                 </td>
                             </tr>
@@ -80,20 +80,22 @@
         });
         <!-- SWEET-ALERT2 -->
 
-        $('.btn-action').on('click', function(e){
-            // stop direct url
-            e.preventDefault();
-            // call ajax
-            $.ajax({
-                url:$(this).attr('href'),
-                type:'GET',
-                dataType:'html',
-                success: function (data) {
-                    $('#main-modal').find('.modal-content').html(data);
-                    $('#main-modal').modal('show');
-                }
+         $(document).ready(function () {
+         $('body').on('click', '.btn-action', function () {
+                // stop direct url
+                event.preventDefault();
+                // call ajax
+                $.ajax({
+                    url:$(this).attr('href'),
+                    type:'GET',
+                    dataType:'html',
+                    success: function (data) {
+                        $('#main-modal').find('.modal-content').html(data);
+                        $('#main-modal').modal('show', {backdrop: 'true'});
+                    }
+                });
             });
-        });
+         });
 
         $('#main-modal').on('submit','#role-form', function (){
             $.ajax({

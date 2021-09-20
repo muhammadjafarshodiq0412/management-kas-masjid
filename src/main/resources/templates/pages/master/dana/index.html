@@ -29,14 +29,14 @@
             </div>
         </div>
         <!-- END SWEET-ALEERT2 -->
-        <div class="col-12">
+        <div class="col-12" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
             <div class="card card-default">
                 <div class="card-header bg-info">
                     <h3 class="card-title">Master Dana</h3>
 
-                    <div class="card-tools">
-                        <div class="input-group input-group-sm" style="width: 73px;">
-                                <a th:href="@{/master/dana/add}" id="add-btn" type="button" class="btn btn-primary btn-action"><i class="fas fa-plus"></i>  ADD</a>
+                    <div class="card-tools"  sec:authorize="hasAnyRole('ROLE_SUPER_USER')">
+                        <div class="input-group input-group-sm" style="width: 100px;">
+                                <a th:href="@{/master/dana/add}" id="add-btn" type="button" class="btn btn-primary btn-action"><i class="fas fa-plus"></i>  Tambah</a>
                         </div>
                     </div>
                 </div>
@@ -44,18 +44,18 @@
                     <table id="data-table" class="table table-hover text-nowrap">
                         <thead>
                             <tr>
-                                <th>Cash</th>
-                                <th>Category</th>
-                                <th style="width: 120px;">#</th>
+                                <th>Kas</th>
+                                <th>Kategori</th>
+                                <th sec:authorize="hasAnyRole('ROLE_SUPER_USER')" style="width: 120px;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:each="item : ${data}">
                                 <td th:text="${item.cash}"></td>
                                 <td th:text="${item.categoryCash.paramValue}"></td>
-                                <td>
-                                    <a th:href="@{/master/dana/edit/{id}(id=${item.id})}" class="btn btn-warning btn-sm btn-action"> <i class="fa fa-edit"></i>  Edit</a>
-                                    <a th:href="@{/master/dana/delete/{id}(id=${item.id})}" class="btn btn-danger btn-sm tombol-hapus"> <i class="fa fa-edit"></i>  Delete</a>
+                                <td sec:authorize="hasAnyRole('ROLE_SUPER_USER')">
+                                    <a th:href="@{/master/dana/edit/{id}(id=${item.id})}" class="btn btn-warning btn-sm btn-action"> <i class="fa fa-edit"></i>  Ubah</a>
+                                    <a th:href="@{/master/dana/delete/{id}(id=${item.id})}" class="btn btn-danger btn-sm tombol-hapus"> <i class="fa fa-edit"></i>  Hapus</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -84,20 +84,22 @@
         });
         <!-- SWEET-ALERT2 -->
 
-        $('.btn-action').on('click', function(e){
-            // stop direct url
-            e.preventDefault();
-            // call ajax
-            $.ajax({
-                url:$(this).attr('href'),
-                type:'GET',
-                dataType:'html',
-                success: function (data) {
-                    $('#main-modal').find('.modal-content').html(data);
-                    $('#main-modal').modal('show');
-                }
+         $(document).ready(function () {
+         $('body').on('click', '.btn-action', function () {
+                // stop direct url
+                event.preventDefault();
+                // call ajax
+                $.ajax({
+                    url:$(this).attr('href'),
+                    type:'GET',
+                    dataType:'html',
+                    success: function (data) {
+                        $('#main-modal').find('.modal-content').html(data);
+                        $('#main-modal').modal('show', {backdrop: 'true'});
+                    }
+                });
             });
-        });
+         });
 
         $('#main-modal').on('submit','#role-form', function (){
             $.ajax({

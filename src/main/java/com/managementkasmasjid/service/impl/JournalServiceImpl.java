@@ -1,5 +1,6 @@
 package com.managementkasmasjid.service.impl;
 
+import com.managementkasmasjid.dto.request.DownloadFileRequest;
 import com.managementkasmasjid.dto.request.JournalRequestDto;
 import com.managementkasmasjid.entity.Journal;
 import com.managementkasmasjid.entity.GlobalParam;
@@ -99,9 +100,9 @@ public class JournalServiceImpl implements JournalService {
     }
 
     @Override
-    public List<Journal> getAllCategoryJournal(Long categoryJournal) {
-        log.info("Journal getAllCategoryJournal");
-        List<Journal> result = journalRepository.findAllByCategoryJournal(categoryJournal);
+    public List<Journal> getAllCategoryJournal(GlobalParam param, DownloadFileRequest request) {
+        log.info("Journal getAllCategoryJournal Date : "+request.getFromDate() +" - "+request.getUntilDate());
+        List<Journal> result = journalRepository.findAllByCategoryJournal(param,request);
         log.info("Data :: " + result.size());
         return result;
     }

@@ -98,8 +98,8 @@ public class CommonUserServiceImpl implements CommonUserService {
     @Override
     public List<CommonUser> getAllMustahik() {
         log.info("CommonUser getAllMustahik");
-        GlobalParam param = globalParamRepository.findByParamConditionAndParamDesc("category_common_user",GlobalConstant.MUSTAHIK);
-        List<CommonUser> result = commonUserRepository.findAllByCategoryCommonUser(param.getId());
+        GlobalParam param = globalParamRepository.findByParamConditionAndParamDesc(GlobalConstant.CATEGORY_COMMON_USER,GlobalConstant.MUSTAHIK);
+        List<CommonUser> result = commonUserRepository.findAllByCategoryCommonUser(param);
         log.info("Data :: " + result.size());
         return result;
     }
@@ -107,8 +107,8 @@ public class CommonUserServiceImpl implements CommonUserService {
     @Override
     public List<CommonUser> getAllMuzakki() {
         log.info("CommonUser getAllMuzakki");
-        GlobalParam param = globalParamRepository.findByParamConditionAndParamDesc("category_common_user",GlobalConstant.MUZAKKI);
-        List<CommonUser> result = commonUserRepository.findAllByCategoryCommonUser(param.getId());
+        GlobalParam param = globalParamRepository.findByParamConditionAndParamDesc(GlobalConstant.CATEGORY_COMMON_USER,GlobalConstant.MUZAKKI);
+        List<CommonUser> result = commonUserRepository.findAllByCategoryCommonUser(param);
         log.info("Data :: " + result.size());
         return result;
     }
