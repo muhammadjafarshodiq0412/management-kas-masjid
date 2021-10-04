@@ -14,6 +14,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -43,6 +44,19 @@ public class JournalServiceImpl implements JournalService {
             log.info("Error : " + ex.getMessage());
         }
         return journal;
+    }
+
+    @Override
+    public List<Journal> saveAll(List<Journal> data) {
+        log.info("Journal save");
+        List<Journal> journals = new ArrayList<>();
+        try {
+            journals = journalRepository.saveAll(data);
+            log.info("Journal saveAll is successfully");
+        } catch (Exception ex) {
+            log.info("Error : " + ex.getMessage());
+        }
+        return journals;
     }
 
     @Override
@@ -106,4 +120,11 @@ public class JournalServiceImpl implements JournalService {
         log.info("Data :: " + result.size());
         return result;
     }
+
+    @Override
+    public void deletByTransaction(Transaction transaction) {
+        log.info("Journal deletByTransaction : "+transaction.getId());
+        journalRepository.deleteByTransaction(transaction);
+    }
+
 }

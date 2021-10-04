@@ -2,6 +2,7 @@ package com.managementkasmasjid.service.impl;
 
 import com.managementkasmasjid.constant.GlobalConstant;
 import com.managementkasmasjid.dto.request.DownloadFileRequest;
+import com.managementkasmasjid.dto.request.JournalRequestDto;
 import com.managementkasmasjid.dto.request.TransactionDto;
 import com.managementkasmasjid.entity.*;
 import com.managementkasmasjid.repository.*;
@@ -13,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -29,17 +31,23 @@ public class TransactionServiceImpl implements TransactionService {
     @Autowired
     DanaService danaService;
     @Autowired
+    JournalService journalService;
+    @Autowired
     IAuthenticationFacade iAuthenticationFacade;
 
     @Override
     public Transaction save(TransactionDto request) {
         Authentication authentication = iAuthenticationFacade.getAuthentication();
-        log.info("Transaction Save By User : "+ authentication.getName());
+        log.info("Transaction Save By User : " + authentication.getName());
         Transaction result = new Transaction();
         User user = userService.getByUsername(authentication.getName());
         GlobalParam danaParam = globalParamService.getByParamConditionAndParamDesc(GlobalConstant.CATEGORY_DANA, request.getCategoryTransaction().getParamDesc());
         CommonUser commonUser = commonUserService.getById(request.getCommonUser());
         Dana dana = danaService.getByCategoryCash(danaParam);
+        GlobalParam accountKas = globalParamService.getByParamConditionAndParamDesc(GlobalConstant.CATEGORY_JOURNAL, GlobalConstant.KAS.toUpperCase());
+        GlobalParam accountBiaya = globalParamService.getByParamConditionAndParamDesc(GlobalConstant.CATEGORY_JOURNAL, GlobalConstant.BIAYA.toUpperCase());
+        journalService.deletByTransaction(result);  //DELETE JOURNAL
+        GlobalParam categoryJournal = new GlobalParam();
         try {
             BeanUtils.copyProperties(request, result, "user", "categoryTransaction", "commonUser", "categoryDana", "transactionDate");
             result.setUser(user);
@@ -52,7 +60,19 @@ public class TransactionServiceImpl implements TransactionService {
             danaService.update(dana); //update cash
             result.setCategoryTransaction(request.getCategoryTransaction());
             result.setCategoryDana(dana.getCategoryCash());
-            transactionRepository.save(result);
+            Transaction transaction = transactionRepository.save(result);
+            //SAVE JOURNAL
+            if (transaction.getCategoryTransaction().getParamDesc().equalsIgnoreCase(GlobalConstant.PENERIMAAN)) {
+                categoryJournal = globalParamService.getByParamConditionAndParamDesc(GlobalConstant.CATEGORY_JOURNAL, GlobalConstant.PENERIMAAN.toUpperCase());
+                Journal debet = new Journal(accountKas.getParamValue(), transaction.getAmount(), 0L, categoryJournal, transaction);//DEBET
+                Journal kredit = new Journal(accountBiaya.getParamValue(), 0L, result.getAmount(), categoryJournal, transaction);//KREDIT
+                journalService.saveAll(Arrays.asList(debet, kredit));
+            } else {
+                categoryJournal = globalParamService.getByParamConditionAndParamDesc(GlobalConstant.CATEGORY_JOURNAL, GlobalConstant.PENGELUARAN.toUpperCase());
+                Journal debet = new Journal(accountKas.getParamValue(), transaction.getAmount(), 0L, categoryJournal, transaction);//DEBET
+                Journal kredit = new Journal(accountBiaya.getParamValue(), 0L, result.getAmount(), categoryJournal, transaction);//KREDIT
+                journalService.saveAll(Arrays.asList(debet, kredit));
+            }
             log.info("Transaction Save is successfully");
         } catch (Exception ex) {
             log.info("Transaction save is failed");
@@ -64,25 +84,42 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public Transaction update(Transaction request) {
         Authentication authentication = iAuthenticationFacade.getAuthentication();
-        log.info("Transaction Save By User : "+ authentication.getName());
+        log.info("Transaction Save By User : " + authentication.getName());
         Transaction result = transactionRepository.findById(request.getId()).orElse(null);
         User user = userService.getByUsername(authentication.getName());
         GlobalParam danaParam = globalParamService.getByParamConditionAndParamDesc(GlobalConstant.CATEGORY_DANA, request.getCategoryTransaction().getParamDesc());
         CommonUser commonUser = commonUserService.getById(request.getCommonUser().getId());
         Dana dana = danaService.getByCategoryCash(danaParam);
+        GlobalParam accountKas = globalParamService.getByParamConditionAndParamDesc(GlobalConstant.CATEGORY_JOURNAL, GlobalConstant.KAS.toUpperCase());
+        GlobalParam accountBiaya = globalParamService.getByParamConditionAndParamDesc(GlobalConstant.CATEGORY_JOURNAL, GlobalConstant.BIAYA.toUpperCase());
+        journalService.deletByTransaction(result);  //DELETE JOURNAL
+        GlobalParam categoryJournal = new GlobalParam();
         try {
-            BeanUtils.copyProperties(request, result, "user", "commonUser","categoryDana", "transactionDate");
+            BeanUtils.copyProperties(request, result, "user", "commonUser", "categoryDana", "transactionDate");
             result.setUser(user);
             result.setCommonUser(commonUser);
             if (request.getCategoryTransaction().getParamDesc().equalsIgnoreCase(GlobalConstant.PENERIMAAN)) {
                 dana.setCash(dana.getCash() + request.getAmount());
             } else {
                 dana.setCash(dana.getCash() + request.getAmount());
+                categoryJournal = globalParamService.getByParamConditionAndParamDesc(GlobalConstant.CATEGORY_JOURNAL, GlobalConstant.PENGELUARAN.toUpperCase());
             }
             danaService.update(dana); //update cash
             result.setCategoryTransaction(request.getCategoryTransaction());
             result.setCategoryDana(dana.getCategoryCash());
-            transactionRepository.save(result);
+            Transaction transaction = transactionRepository.save(result);
+            //SAVE JOURNAL
+            if (transaction.getCategoryTransaction().getParamDesc().equalsIgnoreCase(GlobalConstant.PENERIMAAN)) {
+                categoryJournal = globalParamService.getByParamConditionAndParamDesc(GlobalConstant.CATEGORY_JOURNAL, GlobalConstant.PENERIMAAN.toUpperCase());
+                Journal debet = new Journal(accountKas.getParamValue(), transaction.getAmount(), 0L, categoryJournal, transaction);//DEBET
+                Journal kredit = new Journal(accountBiaya.getParamValue(), 0L, result.getAmount(), categoryJournal, transaction);//KREDIT
+                journalService.saveAll(Arrays.asList(debet, kredit));
+            } else {
+                categoryJournal = globalParamService.getByParamConditionAndParamDesc(GlobalConstant.CATEGORY_JOURNAL, GlobalConstant.PENGELUARAN.toUpperCase());
+                Journal debet = new Journal(accountKas.getParamValue(), transaction.getAmount(), 0L, categoryJournal, transaction);//DEBET
+                Journal kredit = new Journal(accountBiaya.getParamValue(), 0L, result.getAmount(), categoryJournal, transaction);//KREDIT
+                journalService.saveAll(Arrays.asList(debet, kredit));
+            }
             log.info("Transaction Save is successfully");
         } catch (Exception ex) {
             log.info("Transaction save is failed");
@@ -149,10 +186,10 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<Transaction> getAllByDate(GlobalParam globalParam, DownloadFileRequest downloadFileRequest) {
-        log.info("Transaction getAllByDate : "+downloadFileRequest.getFromDate() +" - "+downloadFileRequest.getUntilDate());
+        log.info("Transaction getAllByDate : " + downloadFileRequest.getFromDate() + " - " + downloadFileRequest.getUntilDate());
         List<Transaction> result = new ArrayList<>();
         try {
-            result = transactionRepository.findTransactionAlltByCategoryTransactionAndDate(globalParam,downloadFileRequest);
+            result = transactionRepository.findTransactionAlltByCategoryTransactionAndDate(globalParam, downloadFileRequest);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error : " + e.getMessage());
@@ -169,9 +206,19 @@ public class TransactionServiceImpl implements TransactionService {
         Dana danaPenerimaan = danaService.getByCategoryCash(penerimaan);
         Dana danaPengeluaran = danaService.getByCategoryCash(pengeluaran);
         Long saldo = danaPenerimaan.getCash() - danaPengeluaran.getCash();
-        log.info("Hitung Saldo : "+danaPenerimaan.getCash()+" - "+danaPengeluaran.getCash()+" = "+saldo);
+        log.info("Hitung Saldo : " + danaPenerimaan.getCash() + " - " + danaPengeluaran.getCash() + " = " + saldo);
         log.info("getSaldo Accomplish..");
         return saldo;
+    }
+
+    private void saveJournal(JournalRequestDto journalRequestDto) {
+        JournalRequestDto journal = new JournalRequestDto();
+        journal.setTransaction(journalRequestDto.getTransaction());
+        journal.setCategoryJournal(journalRequestDto.getCategoryJournal());
+        journal.setJournalName(journalRequestDto.getJournalName());
+        journal.setCredit(journalRequestDto.getCredit());
+        journal.setDebet(journalRequestDto.getDebet());
+        journalService.save(journal);
     }
 
 }

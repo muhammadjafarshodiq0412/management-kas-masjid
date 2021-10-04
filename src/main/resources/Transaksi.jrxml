@@ -5,10 +5,10 @@
               xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
               name="Transaksi" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20"
               topMargin="20" bottomMargin="20" uuid="6c7a525d-02ab-47f9-a10d-4f77df131d1e">
-    <parameter name="imgPath" class="java.lang.String" />
-    <parameter name="fromDate" class="java.lang.String" />
-    <parameter name="untilDate" class="java.lang.String" />
-    <parameter name="category" class="java.lang.String" />
+    <parameter name="imgPath" class="java.lang.String"/>
+    <parameter name="fromDate" class="java.lang.String"/>
+    <parameter name="untilDate" class="java.lang.String"/>
+    <parameter name="category" class="java.lang.String"/>
 
     <field name="id" class="java.lang.Long"></field>
     <field name="commonUser.name" class="java.lang.String"></field>
@@ -35,19 +35,23 @@
                 </staticText>
             </frame>
             <frame>
-                <reportElement mode="Opaque" x="89" y="28" width="486" height="52" backcolor="#CCFFDD" uuid="059bea28-313f-4038-b76f-3635df141635"/>
+                <reportElement mode="Opaque" x="89" y="28" width="486" height="52" backcolor="#CCFFDD"
+                               uuid="059bea28-313f-4038-b76f-3635df141635"/>
                 <rectangle>
-                    <reportElement x="0" y="0" width="486" height="3" forecolor="#030303" backcolor="#030303" uuid="c206d466-8440-4f0b-959e-59fbfde5249f"/>
+                    <reportElement x="0" y="0" width="486" height="3" forecolor="#030303" backcolor="#030303"
+                                   uuid="c206d466-8440-4f0b-959e-59fbfde5249f"/>
                 </rectangle>
                 <textField>
-                    <reportElement positionType="FixRelativeToBottom" x="0" y="12" width="485" height="22" forecolor="#050505" uuid="d058afa7-7bc4-4b37-a30c-9267a481a319"/>
+                    <reportElement positionType="FixRelativeToBottom" x="0" y="12" width="485" height="22"
+                                   forecolor="#050505" uuid="d058afa7-7bc4-4b37-a30c-9267a481a319"/>
                     <textElement textAlignment="Center">
                         <font size="15" isBold="true"/>
                     </textElement>
                     <textFieldExpression><![CDATA["LAPORAN TRANSAKSI "+$P{category}]]></textFieldExpression>
                 </textField>
                 <textField>
-                    <reportElement positionType="Float" x="243" y="34" width="238" height="18" forecolor="#050505" uuid="9bb8261d-4b4b-4966-90c9-e25dc4e8c5a2"/>
+                    <reportElement positionType="Float" x="243" y="34" width="238" height="18" forecolor="#050505"
+                                   uuid="9bb8261d-4b4b-4966-90c9-e25dc4e8c5a2"/>
                     <textElement textAlignment="Right" verticalAlignment="Bottom">
                         <font size="10" isBold="false"/>
                     </textElement>
@@ -79,7 +83,7 @@
     <columnHeader>
         <band height="21">
             <staticText>
-                <reportElement mode="Opaque" x="-11" y="0" width="40" height="20" forecolor="#006699"
+                <reportElement mode="Opaque" x="-10" y="0" width="40" height="20" forecolor="#006699"
                                backcolor="#E6E6E6" uuid="6956b805-7a32-4cd7-8d93-0fcf25daca2a">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="43765eca-0d34-4d70-be3a-b4c59cf5314a"/>
@@ -185,7 +189,7 @@
     <detail>
         <band height="19">
             <textField textAdjust="StretchHeight">
-                <reportElement x="-20" y="-1" width="40" height="20" uuid="823ec647-3faa-4990-a0ca-e95e0a4b66b8">
+                <reportElement x="-10" y="-1" width="40" height="20" uuid="823ec647-3faa-4990-a0ca-e95e0a4b66b8">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="43765eca-0d34-4d70-be3a-b4c59cf5314a"/>
                 </reportElement>
@@ -205,7 +209,7 @@
                               value="c3db4623-1bc5-4562-8f82-c14ad8d6faaa"/>
                 </reportElement>
                 <box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
-<!--                    <topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>-->
+                    <!--                    <topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>-->
                     <leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                     <bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                     <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -221,7 +225,7 @@
                               value="29c7c3e0-1eed-4534-b30b-3a77f1625142"/>
                 </reportElement>
                 <box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
-<!--                    <topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>-->
+                    <!--                    <topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>-->
                     <leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                     <bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                     <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -237,7 +241,7 @@
                               value="44cb18b4-d49e-4d1d-ba17-f777868f88e4"/>
                 </reportElement>
                 <box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
-<!--                    <topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>-->
+                    <!--                    <topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>-->
                     <leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                     <bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                     <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -245,7 +249,8 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font size="10"/>
                 </textElement>
-                <textFieldExpression><![CDATA[new SimpleDateFormat("dd-MM-Y").format($F{transactionDate})]]></textFieldExpression>
+                <textFieldExpression>
+                    <![CDATA[new SimpleDateFormat("dd-MM-Y").format($F{transactionDate})]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight">
                 <reportElement x="337" y="-1" width="92" height="20" uuid="68d59a2f-6197-4257-90be-76c917ad61a1">
@@ -253,7 +258,7 @@
                               value="93843383-dddf-4f4d-8e0c-5ee21b78d5a9"/>
                 </reportElement>
                 <box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
-<!--                    <topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>-->
+                    <!--                    <topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>-->
                     <leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                     <bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                     <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -269,7 +274,7 @@
                               value="7d061788-6c1e-4d5a-b1fb-b37690a79f4f"/>
                 </reportElement>
                 <box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
-<!--                    <topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>-->
+                    <!--                    <topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>-->
                     <leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                     <bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                     <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>

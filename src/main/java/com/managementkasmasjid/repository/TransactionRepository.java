@@ -14,6 +14,6 @@ import java.util.List;
 public interface TransactionRepository extends JpaRepository<Transaction,Long> {
     List<Transaction> findAllByCategoryDana(Long categoryDana);
     List<Transaction> findAllByCategoryTransaction(GlobalParam categoryTransaction);
-    @Query(value = "SELECT t.* FROM management_kas_masjid.transaction t WHERE t.category_transaction = :#{#param.id} AND DATE_FORMAT(t.transaction_date, '%Y-%m-%d') between :#{#request.fromDate} AND :#{#request.untilDate}", nativeQuery = true)
+    @Query(value = "SELECT t.* FROM transaction t WHERE t.category_transaction = :#{#param.id} AND DATE_FORMAT(t.transaction_date, '%Y-%m-%d') between DATE_FORMAT(:#{#request.fromDate}, '%Y-%m-%d') AND DATE_FORMAT(:#{#request.untilDate}, '%Y-%m-%d')", nativeQuery = true)
     List<Transaction> findTransactionAlltByCategoryTransactionAndDate(@Param("param") GlobalParam param, @Param("request") DownloadFileRequest request);
 }
