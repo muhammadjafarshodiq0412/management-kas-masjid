@@ -56,7 +56,7 @@
                     <tr th:each="item : ${data}">
                         <td th:text="${item.commonUser.name}"></td>
                         <td th:text="${item.amount}"></td>
-                        <td th:text="${item.transactionDate}"></td>
+                        <td th:text="${#calendars.format(item.transactionDate, 'dd-MM-yyyy')}"></td>
                         <td th:text="${item.user.username}"></td>
                         <td th:text="${item.info}"></td>
                         <td>

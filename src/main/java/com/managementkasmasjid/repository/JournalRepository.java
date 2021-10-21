@@ -19,7 +19,7 @@ public interface JournalRepository extends JpaRepository<Journal, Long> {
             "where j.category_journal =  :#{#param.id} " +
             "and " +
             "DATE_FORMAT(t.transaction_date, '%Y-%m-%d') between DATE_FORMAT( :#{#request.fromDate}, '%Y-%m-%d') AND DATE_FORMAT(:#{#request.untilDate}, '%Y-%m-%d') " +
-            "order by j.transaction ASC;", nativeQuery = true)
+            "order by j.id ASC;", nativeQuery = true)
     List<Journal> findAllByCategoryJournal(@Param("param") GlobalParam param, @Param("request") DownloadFileRequest request);
 
     @Modifying

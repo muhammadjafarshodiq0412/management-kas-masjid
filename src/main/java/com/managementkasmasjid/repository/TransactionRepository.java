@@ -16,4 +16,6 @@ public interface TransactionRepository extends JpaRepository<Transaction,Long> {
     List<Transaction> findAllByCategoryTransaction(GlobalParam categoryTransaction);
     @Query(value = "SELECT t.* FROM transaction t WHERE t.category_transaction = :#{#param.id} AND DATE_FORMAT(t.transaction_date, '%Y-%m-%d') between DATE_FORMAT(:#{#request.fromDate}, '%Y-%m-%d') AND DATE_FORMAT(:#{#request.untilDate}, '%Y-%m-%d')", nativeQuery = true)
     List<Transaction> findTransactionAlltByCategoryTransactionAndDate(@Param("param") GlobalParam param, @Param("request") DownloadFileRequest request);
+    @Query(value = "SELECT SUM(t.amount) FROM transaction t WHERE t.category_transaction = :#{#param.id}", nativeQuery = true)
+    Long sumTransactionByCategory(@Param("param") GlobalParam param);
 }
