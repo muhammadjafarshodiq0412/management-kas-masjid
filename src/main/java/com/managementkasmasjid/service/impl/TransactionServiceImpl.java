@@ -44,9 +44,8 @@ public class TransactionServiceImpl implements TransactionService {
         GlobalParam danaParam = globalParamService.getByParamConditionAndParamDesc(GlobalConstant.CATEGORY_DANA, request.getCategoryTransaction().getParamDesc());
         CommonUser commonUser = commonUserService.getById(request.getCommonUser());
         Dana dana = danaService.getByCategoryCash(danaParam);
-        GlobalParam accountKas = globalParamService.getByParamConditionAndParamDesc(GlobalConstant.CATEGORY_JOURNAL, GlobalConstant.KAS.toUpperCase());
-        GlobalParam accountBiaya = globalParamService.getByParamConditionAndParamDesc(GlobalConstant.CATEGORY_JOURNAL, GlobalConstant.BIAYA.toUpperCase());
-        journalService.deletByTransaction(result);  //DELETE JOURNAL
+        GlobalParam accountKas = globalParamService.getByParamConditionAndParamDesc(GlobalConstant.CATEGORY_ACCOUNT, GlobalConstant.KAS.toUpperCase());
+        GlobalParam accountBiaya = globalParamService.getByParamConditionAndParamDesc(GlobalConstant.CATEGORY_ACCOUNT, GlobalConstant.BIAYA.toUpperCase());
         GlobalParam categoryJournal = new GlobalParam();
         try {
             BeanUtils.copyProperties(request, result, "user", "categoryTransaction", "commonUser", "categoryDana", "transactionDate");
@@ -90,8 +89,8 @@ public class TransactionServiceImpl implements TransactionService {
         GlobalParam danaParam = globalParamService.getByParamConditionAndParamDesc(GlobalConstant.CATEGORY_DANA, request.getCategoryTransaction().getParamDesc());
         CommonUser commonUser = commonUserService.getById(request.getCommonUser().getId());
         Dana dana = danaService.getByCategoryCash(danaParam);
-        GlobalParam accountKas = globalParamService.getByParamConditionAndParamDesc(GlobalConstant.CATEGORY_JOURNAL, GlobalConstant.KAS.toUpperCase());
-        GlobalParam accountBiaya = globalParamService.getByParamConditionAndParamDesc(GlobalConstant.CATEGORY_JOURNAL, GlobalConstant.BIAYA.toUpperCase());
+        GlobalParam accountKas = globalParamService.getByParamConditionAndParamDesc(GlobalConstant.CATEGORY_ACCOUNT, GlobalConstant.KAS.toUpperCase());
+        GlobalParam accountBiaya = globalParamService.getByParamConditionAndParamDesc(GlobalConstant.CATEGORY_ACCOUNT, GlobalConstant.BIAYA.toUpperCase());
         journalService.deletByTransaction(result);  //DELETE JOURNAL
         GlobalParam categoryJournal = new GlobalParam();
         try {
@@ -133,6 +132,7 @@ public class TransactionServiceImpl implements TransactionService {
         log.info("Transaction Delete");
         Transaction result = transactionRepository.findById(id).orElse(null);
         if (result != null) {
+            journalService.deletByTransaction(result);  //DELETE JOURNAL
             transactionRepository.delete(result);
             log.info("Transaction Delete is successfully");
         } else {

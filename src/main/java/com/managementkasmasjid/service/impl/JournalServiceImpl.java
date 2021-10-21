@@ -126,5 +126,4 @@ public class JournalServiceImpl implements JournalService {
         log.info("Journal deletByTransaction : "+transaction.getId());
         journalRepository.deleteByTransaction(transaction);
     }
-
 }
